@@ -1,0 +1,10 @@
+*.log
+*.retry
+*.swp
+*.tmp
+.env
+.env.*
+secrets/
+vault.yml
+__pycache__/
+*.pyc

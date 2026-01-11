@@ -1,0 +1,64 @@
+---
+
+- name: Apply RHEL9 STIG hardening
+  hosts: all
+  become: true
+  gather_facts: true
+  
+
+  vars:
+    # Session killers - MUST DISABLE
+    rhel_09_412080: false
+    rhel_09_412035: false
+    rhel_09_412025: false
+    rhel_09_412020: false
+    rhel_09_255095: false
+    rhel_09_255100: false
+
+    # Sudo/auth disruptions
+    rhel_09_432015: false
+    rhel_09_432020: false
+    rhel_09_611085: false
+    rhel_09_611145: false
+
+    # Netowrk/firewall
+    rhel_09_251020: false
+    rhel_09_251035: false
+    rhel_09_252040: false
+    rhel_09_253010: false
+    rhel_09_255015: false
+      
+    # General safety
+    rhel9stig_disruption_high: false
+    rhel9stig_use_pam_pwquality: false
+    rhel9stig_system_is_container: false
+    
+
+
+  pre_tasks:
+    - name: Prevent session timeout during hardening
+      shell: |
+        unset TMOUT
+        export TMOUT=0
+      ignore_errors: true  
+
+  pre_tasks:
+    - name: Ensure SSH allowed in firewall
+      ansible.posix.firewalld: 
+        service: ssh
+        permanent: true
+        state: enabled
+        immediate: true
+      ignore_errors: true 
+  
+
+  roles:
+    -  RedHatOfficial.rhel9_stig
+ 
+
+  post_tasks: 
+    - name: Display STIG compliance summary
+      debug: 
+        msg: |
+          STIG hardening complete - Review PLAY RECAP for compliance metrics
+          Ansible automation: rhel9-disa-stig-automation

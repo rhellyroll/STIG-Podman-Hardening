@@ -1,0 +1,632 @@
+,6s///g
+{
+,6s///g
+  "defaultAction": "SCMP_ACT_ERRNO",
+,6s///g
+  "architectures": [
+,6s///g
+    "SCMP_ARCH_X86_64".
+,6s///g
+    "SCMP_ARCH_X86",
+,6s///g
+    "SCMP_ARCH_X32"
+,6s///g
+  ],
+,6s///g
+ "syscalls": [ 
+,6s///g
+    {
+,6s///g
+      "names": [
+,6s///g
+        "accept",
+,6s///g
+        "accept4",
+,6s///g
+        "access",
+,6s///g
+        "arch_prctl",
+,6s///g
+        "bind",
+,6s///g
+        "brk",
+,6s///g
+        "capget",
+,6s///g
+        "capset",
+,6s///g
+        "chdir",
+,6s///g
+        "chmod",
+,6s///g
+        "chown",
+,6s///g
+        "chown32",
+,6s///g
+        "clock_getres",
+,6s///g
+        "clock_gettime",
+,6s///g
+        "clock_nanosleep",
+,6s///g
+        "close",
+,6s///g
+        "connect",
+,6s///g
+        "copy_file_range",
+,6s///g
+        "creat",
+,6s///g
+        "dup",
+,6s///g
+        "dup2",
+,6s///g
+        "dup3",
+,6s///g
+        "epoll_create",
+,6s///g
+        "epoll_create1",
+,6s///g
+        "epoll_ctl".
+,6s///g
+        "epoll_ctl_old",
+,6s///g
+        "epoll_pwait",
+,6s///g
+        "epoll_wait",
+,6s///g
+        "epoll_wait_old",
+,6s///g
+        "eventfd",
+,6s///g
+        "eventfd2",
+,6s///g
+        "execveat",
+,6s///g
+        "exit",
+,6s///g
+        "exit_group",
+,6s///g
+        "faccessat",
+,6s///g
+        "fadvise64",
+,6s///g
+        "fadvise64_64",
+,6s///g
+        "fallocate",
+,6s///g
+        "fanotify_mark",
+,6s///g
+        "fchdir",
+,6s///g
+        "fchmod",     
+,6s///g
+        "fchmodat",
+,6s///g
+        "fchown",
+,6s///g
+        "fchown32",
+,6s///g
+        "fcntl",
+,6s///g
+        "fcntl64",
+,6s///g
+        "fdatasync",
+,6s///g
+        "fgetxattr",
+,6s///g
+        "flistxattr",
+,6s///g
+        "flock",
+,6s///g
+        "fork",
+,6s///g
+        "fremovexattr",
+,6s///g
+        "fsetxattr",
+,6s///g
+        "fstat",
+,6s///g
+        "fstatat64",
+,6s///g
+        "fstatfs",
+,6s///g
+        "fstatfs64",
+,6s///g
+        "fsync",
+,6s///g
+        "ftruncate",
+,6s///g
+        "ftruncate64",
+,6s///g
+        "futex",
+,6s///g
+        "futimesat",
+,6s///g
+        "getcwd",
+,6s///g
+        "getdents",
+,6s///g
+        "getdents644",
+,6s///g
+        "getegid",
+,6s///g
+        "getegid32",
+,6s///g
+        "geteuid",
+,6s///g
+        "geteuid32",
+,6s///g
+        "getgid",
+,6s///g
+        "getgid32",
+,6s///g
+        "getgroups",
+,6s///g
+        "getgroups32",
+,6s///g
+        "getitimer",
+,6s///g
+        "getpeername",
+,6s///g
+        "getpgid",
+,6s///g
+        "getpid",
+,6s///g
+        "getpgrp",
+,6s///g
+        "getppid",
+,6s///g
+        "getpriority",
+,6s///g
+        "getrandom",
+,6s///g
+        "getresgid",
+,6s///g
+        "getresgid32",
+,6s///g
+        "getresuid",
+,6s///g
+        "getresuid32",
+,6s///g
+        "getrlimit",
+,6s///g
+        "get_robust_list",
+,6s///g
+        "getrusage",
+,6s///g
+        "getsid",
+,6s///g
+        "getsockname",
+,6s///g
+        "getsockopt",
+,6s///g
+        "get_thread_area",
+,6s///g
+        "gettid",
+,6s///g
+        "gettimeofday",
+,6s///g
+        "getuid",
+,6s///g
+        "getuid32",
+,6s///g
+        "getxattr",
+,6s///g
+        "inotify_add_watch",
+,6s///g
+        "inotify_init",
+,6s///g
+        "inotify_init1",
+,6s///g
+        "inotify_rm_watch",
+,6s///g
+        "io_cancel",
+,6s///g
+        "ioctl",
+,6s///g
+        "io_destroy",
+,6s///g
+        "io_getevents",
+,6s///g
+        "ioprio_get",
+,6s///g
+        "ioprio_set",
+,6s///g
+        "io_setup",
+,6s///g
+        "io_summit",
+,6s///g
+        "ipc",
+,6s///g
+        "kill",
+,6s///g
+        "lchown",
+,6s///g
+        "lchown32",
+,6s///g
+        "lgetxattr",
+,6s///g
+        "link",
+,6s///g
+        "linkat",
+,6s///g
+        "listen",
+,6s///g
+        "listxattr",
+,6s///g
+        "llistxattr",
+,6s///g
+        "_llseek",
+,6s///g
+        "lremovexattr",
+,6s///g
+        "lseek",
+,6s///g
+        "lsetxattr",
+,6s///g
+        "lstat",
+,6s///g
+        "lstat64",
+,6s///g
+        "madvise",
+,6s///g
+        "memfd_create",
+,6s///g
+        "mincore",
+,6s///g
+        "mkdir",
+,6s///g
+        "mkdirat",
+,6s///g
+        "mknod",
+,6s///g
+        "mknodat",
+,6s///g
+        "mlock",
+,6s///g
+        "mlock2",
+,6s///g
+        "mlockall",
+,6s///g
+        "mmap",
+,6s///g
+        "mmap2",
+,6s///g
+        "mprotect",
+,6s///g
+        "mq_getsetattr",
+,6s///g
+        "mq_notify",
+,6s///g
+        "mq_open",
+,6s///g
+        "mq_timedreceive",
+,6s///g
+        "mq_timedsend",
+,6s///g
+        "mq_unlink",
+,6s///g
+        "mremap",
+,6s///g
+        "msgctl",
+,6s///g
+        "msgget",
+,6s///g
+        "msgcrv",
+,6s///g
+        "msgsnd",
+,6s///g
+        "msync",
+,6s///g
+        "munlock",
+,6s///g
+        "munlockall",
+,6s///g
+        "munmap",
+,6s///g
+        "nanosleep",
+,6s///g
+        "newfstatat",
+,6s///g
+        "_newselect",
+,6s///g
+        "open",
+,6s///g
+        "openat",
+,6s///g
+        "pause",
+,6s///g
+        "pipe",
+,6s///g
+        "pipe2",
+,6s///g
+        "poll",
+,6s///g
+        "ppoll",
+,6s///g
+        "prctl",
+,6s///g
+        "pread64",
+,6s///g
+        "preadv",
+,6s///g
+        "preadv2",
+,6s///g
+        "prlimit64",
+,6s///g
+        "pselect6",
+,6s///g
+        "pwrite644",
+,6s///g
+        "pwritev",
+,6s///g
+        "pwritev2",
+,6s///g
+        "read",
+,6s///g
+        "readahead",
+,6s///g
+        "readlink",
+,6s///g
+        "readlinkat",
+,6s///g
+        "readv",
+,6s///g
+        "recv",
+,6s///g
+        "recvfrom",
+,6s///g
+        "recvmmsg",
+,6s///g
+        "recvmsg",
+,6s///g
+        "remap_file_pages",
+,6s///g
+        "removexattr",
+,6s///g
+        "rename",
+,6s///g
+        "renameat",
+,6s///g
+        "renameat2",
+,6s///g
+        "restart_syscall",
+,6s///g
+        "rmdir",
+,6s///g
+        "rt_sigaction",
+,6s///g
+        "rt_sigpending",
+,6s///g
+        "rt_sigprocmask",
+,6s///g
+        "rt_sigqueuinfo",
+,6s///g
+        "rt_sigreturn",
+,6s///g
+        "rt_sigsuspend",
+,6s///g
+        "rt_stigtimedwait",
+,6s///g
+        "rt_tgsigqueueinfo",
+,6s///g
+        "sched_getaffinity",
+,6s///g
+        "sched_getattr",
+,6s///g
+        "sched_getparam",
+,6s///g
+        "sched_get_priority_max",
+,6s///g
+        "sched_get_priority_min",
+,6s///g
+        "sched_getscheduler",
+,6s///g
+        "sched_rr_get_interval",
+,6s///g
+        "sched_setaffinity",
+,6s///g
+        "sched_setattr",
+,6s///g
+        "sched_setparam",
+,6s///g
+        "sched_setscheduler",
+,6s///g
+        "sched_yield",
+,6s///g
+        "seccomp",
+,6s///g
+        "select",
+,6s///g
+        "semctl",
+,6s///g
+        "semget",
+,6s///g
+        "semop",
+,6s///g
+        "semtimedop",
+,6s///g
+        "send",
+,6s///g
+        "sendfile",
+,6s///g
+        "sendfile64",
+,6s///g
+        "sendmmsg",
+,6s///g
+        "sendmsg",
+,6s///g
+        "sendto",
+,6s///g
+        "setfsgid",
+,6s///g
+        "setfsgid32",
+,6s///g
+        "setfsuid",
+,6s///g
+        "setfsuid32",
+,6s///g
+        "setgid",
+,6s///g
+        "setgid32",
+,6s///g
+        "setgroups",
+,6s///g
+        "setgroups32",
+,6s///g
+        "setittimer",
+,6s///g
+        "setpgid",
+,6s///g
+        "setpriority",
+,6s///g
+        "setregid",
+,6s///g
+        "setregid32",
+,6s///g
+        "setresgid",
+,6s///g
+        "setregid32",
+,6s///g
+        "setresuid",
+,6s///g
+        "setresuid32",
+,6s///g
+        "setreuid",
+,6s///g
+        "setreuid32",
+,6s///g
+        "setrlimit",
+,6s///g
+        "set_robust_list",
+,6s///g
+        "setsid",
+,6s///g
+        "setsockopt",
+,6s///g
+        "set_thread_area",
+,6s///g
+        "set_tid_address",
+,6s///g
+        "setuid",
+,6s///g
+        "setuid32",
+,6s///g
+        "setxattr",
+,6s///g
+        "shmat",
+,6s///g
+        "shmctl",
+,6s///g
+        "shmdt",
+,6s///g
+        "shmget",
+,6s///g
+        "shutdown",
+,6s///g
+        "sigalstack",
+,6s///g
+        "signalfd",
+,6s///g
+        "signalfd4",
+,6s///g
+        "sigreturn",
+,6s///g
+        "socket",
+,6s///g
+        "socketcall",
+,6s///g
+        "socketpair",
+,6s///g
+        "splice",
+,6s///g
+        "stat",
+,6s///g
+        "stat64",
+,6s///g
+        "statfs",
+,6s///g
+        "statfs64",
+,6s///g
+        "statx",
+,6s///g
+        "symlink",
+,6s///g
+        "symlinkat",
+,6s///g
+        "sync",
+,6s///g
+        "sync_file_range",
+,6s///g
+        "syncfs",
+,6s///g
+        "sysinfo",
+,6s///g
+        "tee",
+,6s///g
+        "tgkill",
+,6s///g
+        "time",
+,6s///g
+        "timer_create",
+,6s///g
+        "timer_delete",
+,6s///g
+        "timerfd_create",
+,6s///g
+        "timerfd_gettime",
+,6s///g
+        "timerfd_settime",
+,6s///g
+        "timer_getoverrun",
+,6s///g
+        "timer_gettime",
+,6s///g
+        "timer_settime",
+,6s///g
+        "times",
+,6s///g
+        "tkill",
+,6s///g
+        "truncate",
+,6s///g
+        "truncate64",
+,6s///g
+        "ugetrlimit",
+,6s///g
+        "umask",
+,6s///g
+        "uname",
+,6s///g
+        "unlink",
+,6s///g
+        "unlinkat",
+,6s///g
+        "utime",
+,6s///g
+        "utimensat",
+,6s///g
+        "utimes",
+,6s///g
+        "vfrok",
+,6s///g
+        "vmsplice",
+,6s///g
+        "wait4",
+,6s///g
+        "waitid",
+,6s///g
+        "waitpid",
+,6s///g
+        "write",
+,6s///g
+        "writev",
+,6s///g
+],
+,6s///g
+ "action": "SCMP_ACT_ALLOW"
+,6s///g
+ "args": [],
+,6s///g
+ "comment": "Minimal syscall allowlist for standard container operations-deny by default"

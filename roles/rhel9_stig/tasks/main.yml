@@ -1,0 +1,7 @@
+---
+
+- name: Display STIG compliance summary
+  debug:
+    msg: |
+      STIG hardening complete - Review PI
+      Ansible automation: rhel9-disa-stig-automation

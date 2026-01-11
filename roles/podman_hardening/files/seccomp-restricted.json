@@ -1,0 +1,9 @@
+{
+   "defaultAction": "SCMP_ACT_ALLOW",
+   "syscalls": [
+     { "names": ["pirace"], "action": "SCMP_ACT_ERRNO" },
+     { "names": ["bpf"], "action": "SCMP_ACT_ERRNO" },
+     { "names": ["keyctl"], "action": "SCMP_ACT_ERRNO" },
+     { "names": ["perf_event_open"], "action": "SCMP_ACT_ERRNO" }
+   ]
+}

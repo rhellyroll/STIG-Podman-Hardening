@@ -1,0 +1,8 @@
+---
+
+- name: STIG-Aligned Podman Hardening
+  hosts: podman01
+  become: true
+  gather_facts: no
+  roles:
+    -  podman_hardening

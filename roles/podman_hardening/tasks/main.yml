@@ -1,0 +1,37 @@
+---
+
+- name: Create seccomp dir
+  file:
+    path: /etc/podman/seccomp
+    state: directory
+    mode: '0775'
+
+- name: Copy seccomp profile 
+  copy:
+    src: seccomp-restricted.json
+    dest: /etc/podman/seccomp/seccomp-restricted.json
+    mode: '0644'
+
+#- name: Test allowed container
+#  command: podman run --rm --security-opt seccomp=/etc/podman/seccomp/seccomp-restricted.json alpine uname -a
+#  register: test_allowed
+#  changed_when: false
+  
+
+- name: Test syscall block
+  command: podman run --rm --security-opt seccomp=/etc/podman/seccomp/seccomp-restricted.json alpine strace ls
+  register: test_denied
+  failed_when: "'denied' not in test_denied.stderr"
+  ignore_errors: true
+
+- name: Firewall container zone
+  firewalld:
+    zone: container-zone
+    interface: podman0
+    permanent: true
+    state: enabled
+
+- name: Reload firewall
+  service:
+    name: firewalld
+    state: reloaded
