@@ -7,9 +7,9 @@
 
 This project demonstrates how to securely deploy and operate Podman containers on a hardened RHEL 9 system while maintaining compliance with DISA STIG-aligned security controls.
 
-The lab focuses on enforcing OS-level security boundaries (SELinux, seccomp, systemd, and kernel controls) rather than relying on wrapper scripts or tool defaults. All controls are validated through direct negative and positive testing, with audit-grade evidence captured throughout.
+The lab focuses on enforcing OS-level security boundaries (SELinux, seccomp, systemd, and kernel controls) rather than relying on wrapper scripts or tool defaults. All controls are validated through **direct positive and negative testing**, with audit-grade evidence captured throughout.
 
-**In simple terms:** this project shows how to safely add containers to a locked-down Linux system without weakening security or compliance.
+**Key Outcome:** Hardened multi-node lab fleet with **rootless Podman**, enforced STIG baselines, **idempotent automation**, and **audit-defensible evidence**.
 
 ---
 
@@ -19,11 +19,8 @@ The lab focuses on enforcing OS-level security boundaries (SELinux, seccomp, sys
 |---------|--------|
 | OS | RHEL 9.x |
 | Container Runtime | Podman (rootless where applicable) |
-| Nodes | 3-node lab environment |
-| | • Control node |
-| | • Podman01 (container host) |
-| | • Audit01 (validation node) |
-| Security Controls | SELinux (enforcing), seccomp, systemd |
+| Nodes | Control, Podman01, Audit01 |
+| Security Controls | SELinux (enforcing), seccomp, systemd, firewalld |
 | Compliance Alignment | DISA STIG principles |
 | Validation Method | OS-level command testing + policy enforcement |
 
@@ -33,133 +30,179 @@ The lab focuses on enforcing OS-level security boundaries (SELinux, seccomp, sys
 
 ## Objectives
 
-- Harden Podman container execution on RHEL 9
-- Enforce SELinux container confinement
-- Apply and validate seccomp syscall restrictions
-- Ensure containers operate under systemd governance
-- Maintain compliance-aligned security posture without breaking workloads
+- Harden Podman container execution  
+- Enforce SELinux container confinement  
+- Apply and validate seccomp syscall restrictions  
+- Ensure containers operate under systemd governance  
+- Maintain compliance-aligned security posture without breaking workloads  
 - Produce audit-defensible evidence of enforcement
 
 ---
 
 ## Security Design Principles
 
-- **Security-first configuration:** Containers adapt to the OS, not the reverse
-- **Least privilege:** No unnecessary capabilities or elevated access
-- **Defense in depth:** Multiple layers of enforcement (kernel, SELinux, seccomp)
-- **Evidence-driven validation:** Every control is tested and verified
-- **Audit realism:** Proof mirrors what a security reviewer would expect to see
+- **Security-first configuration:** OS constrains containers  
+- **Least privilege:** Minimal capabilities  
+- **Defense in depth:** Kernel, SELinux, seccomp layers  
+- **Evidence-driven validation:** Every control tested  
+- **Audit realism:** Proof mirrors reviewer expectations
 
 ---
 
 ## Control Implementation Summary
 
 ### SELinux
-- Enforcing mode enabled
-- Container processes confined to container-specific domains
-- Denials verified using AVC logs and enforcement testing
+- Enforcing mode across all nodes  
+- Container processes confined to domain-specific policies  
+- Denials captured and verified via AVC logs
 
 ### Seccomp
-- Custom syscall restrictions applied
-- Unauthorized syscalls blocked with explicit `EPERM` errors
-- Negative testing confirms enforcement (not just configuration)
+- Custom JSON profiles restrict syscalls  
+- Unauthorized syscalls blocked with `EPERM`  
+- Deny-by-default profile with allowlisting
 
-### systemd Integration
-- Containers managed as systemd services
-- Restart policies, dependency ordering, and lifecycle control enforced
-- No unmanaged or orphaned container processes
+### systemd
+- Containers managed as systemd services  
+- Restart policies and lifecycle enforced
 
-### FIPS Alignment
-- **FIPS configuration prerequisites enforced**
-  - Kernel configuration verified
-  - System crypto policies validated
-- No unsupported crypto libraries introduced by containers
+### Firewall
+- Dedicated container-zone for podman0  
+- Drop zone enforces restrictive default-deny posture
 
----
-
-## Validation Methodology
-
-Validation prioritizes **direct OS-level testing** over wrapper scripts or abstracted tooling.
-
-Examples include:
-- Verifying SELinux denials via audit logs
-- Triggering blocked syscalls to confirm seccomp enforcement
-- Confirming container lifecycle behavior through systemd status and logs
-- Ensuring containers fail securely when violating policies
-
-This approach ensures controls are **actively enforced**, not merely declared.
+### FIPS Pre-Requisites
+- Kernel FIPS settings validated  
+- System crypto policies verified  
+- Ensures Podman workloads comply with enterprise crypto standards
 
 ---
 
-## Evidence & Screenshots (17 Total)
+## Playbook Execution & Idempotence
 
-All screenshots are purpose-selected and audit-relevant.  
-No supplemental or decorative images are included.
+### 1️⃣ Full STIG Playbook (~2,000+ Checks)
+- Expanded from first project (~700 tasks) to include container-specific hardening, additional nodes, and FIPS pre-requisites  
+- **Execution Result:** 2,035 tasks OK, 251 changed  
+- **Evidence:** Image 13 – Full playbook summary  
+- **Reasoning:** Increase in tasks is due to combining traditional STIG checks with container-specific security automation and multi-node validation
 
-| # | Screenshot | Validation Purpose |
-|--|-----------|-------------------|
-| 1 | SELinux enforcing status | Confirms global enforcement |
-| 2 | Podman version & runtime info | Establishes execution context |
-| 3 | Container SELinux context | Confirms domain confinement |
-| 4 | AVC denial log | Evidence of SELinux blocking |
-| 5 | seccomp profile applied | Confirms policy attachment |
-| 6 | Blocked syscall attempt | Demonstrates enforcement |
-| 7 | `EPERM` syscall failure | **Critical negative test** |
-| 8 | systemd unit file | Lifecycle governance |
-| 9 | `systemctl status` output | Runtime supervision |
-|10 | Unauthorized action failure | **Highest-value proof** |
-|11 | Audit log correlation | Cross-verification |
-|12 | FIPS crypto policy status | Compliance prerequisite |
-|13 | Kernel parameter verification | Security baseline |
-|14 | Container restart behavior | Resilience control |
-|15 | Resource limit enforcement | Stability & safety |
-|16 | Clean container shutdown | Orderly lifecycle |
-|17 | Final compliance snapshot | End-state verification |
+### 2️⃣ Podman Hardening Playbook (Idempotent)
+- Focused container security automation  
+- Creates seccomp profiles, tests enforcement, configures firewall zones  
+- **Execution Result:** 5 OK / 2 changed (expected)  
+- **Evidence:** Image 15 – Idempotent run
+
+---
+
+## Validation Evidence (15 Screenshots — reordered to match original lab)
+
+| #  | Screenshot | Validation Purpose |
+|----|-----------|-------------------|
+| 01 | Audit Node Validation | Confirms audit01 node exists with auditd active |
+| 02 | Project Structure Tree | Shows complete Ansible project hierarchy |
+| 03 | Rootless Podman Execution | Container runs as non-root ansible user |
+| 04 | Seccomp Profile Content | Deny-by-default JSON profile applied |
+| 05 | Seccomp Enforcement Test | chmod syscall blocked inside container |
+| 06 | System Services Status | firewalld & auditd active, SELinux enforcing |
+| 07 | SELinux AVC Denial Logs | Captures blocked login attempts |
+| 08 | Firewall Container Zone Creation | container-zone created, podman0 assigned |
+| 09 | Firewall Container Zone Config | Interface bindings and settings listed |
+| 10 | Firewall Drop Zone | Restrictive default-deny policy displayed |
+| 11 | Ansible Inventory Structure | Multi-node architecture validated |
+| 12 | Ansible Configuration | roles path, inventory, forks=10, timeout |
+| 13 | Full STIG Playbook Execution | 2,035 tasks completed across nodes |
+| 14 | Fleet Connectivity Test | Ansible reachability confirmed |
+| 15 | Podman Hardening Idempotence | 5 OK / 2 changed pattern, automation proven |
 
 ---
 
 ## Why This Matters
 
-Many container deployments weaken host security to “make things work.”  
-This lab demonstrates the opposite approach:
+Many container deployments weaken host security. This lab demonstrates the **opposite approach**:
 
-- Containers operate **within** hardened constraints
-- Security controls remain intact
-- Violations fail safely and visibly
-- Evidence supports audit and review requirements
+- Containers operate **within hardened OS constraints**  
+- Security controls remain intact  
+- Violations fail safely and visibly  
+- Evidence supports audit and review requirements  
 
-This is directly applicable to regulated, compliance-driven Linux environments.
+Applicable to **regulated, compliance-driven Linux environments**.
 
 ---
 
 ## Key Takeaways
 
-- Secure containerization is an OS problem first, not a tooling problem
-- SELinux and seccomp must be *tested*, not trusted
-- systemd remains the authority over long-running services
-- Compliance-aligned systems can support containers without exceptions
-- Audit evidence is as important as configuration
+- Secure containerization is an OS problem first, not a tooling problem  
+- SELinux and seccomp must be **tested**, not assumed  
+- systemd remains authoritative over long-running services  
+- Compliance-aligned systems safely support containers  
+- Audit evidence is as important as configuration  
+- Negative testing validates enforcement
 
 ---
 
 ## Skills Demonstrated
 
-- RHEL 9 system hardening
-- Podman container security
-- SELinux policy enforcement and validation
-- seccomp syscall restriction testing
-- systemd service management
-- Compliance-aligned engineering judgment
-- Security-focused troubleshooting and analysis
+- RHEL 9 system hardening (DISA STIG)  
+- Podman rootless container security  
+- SELinux enforcement & AVC log analysis  
+- Seccomp syscall restriction testing  
+- systemd service management  
+- Firewalld zone-based networking  
+- Evidence-driven validation  
+- Ansible automation with idempotence  
+- Multi-node fleet management
 
 ---
 
-## Disclaimer
+## Target Environments
 
-This project is a controlled lab environment designed to demonstrate security concepts and enforcement techniques. Production deployments may require additional scaling, monitoring, and automation based on organizational requirements.
+- Regulated enterprise & government networks  
+- Air-gapped & restricted systems  
+- RMF/ATO-aligned platforms  
+- FIPS-validated deployments  
+- DoD & defense contractor infrastructure
 
 ---
 
-## Author
-  
-Linux Systems Administration | Platform Security | Automation
+## Production Roadmap / Next Lab
+
+- **Next Lab:** Foreman/Satellite containerized deployment  
+- Centralized configuration, patching, inventory management  
+- Future: CI/CD gates, SCAP scanning, FIPS validation  
+> Provides context and planning skills; full production implementation **not required** for this lab
+
+---
+
+## Repository Structure
+
+├── ansible.cfg
+├── inventory/
+│ └── fleet.ini
+├── playbooks/
+│ ├── rhel9_stig.yml
+│ ├── apply_stig.yml
+│ └── podman_hardening.yml
+├── roles/
+│ ├── rhel9_stig/
+│ └── podman_hardening/
+├── seccomp/
+│ ├── seccomp-restricted1.json
+│ └── seccomp-deny-by-default.json
+├── docs/
+└── evidence/
+└── screenshots/ # 15 validation screenshots
+
+
+---
+
+## Project Classification
+
+**Educational/Portfolio Project**  
+Demonstrates practical application of DISA STIGs, CIS Benchmarks, NIST guidelines, and NSA/CISA container hardening guidance in a lab environment.
+
+---
+
+## Additional Notes
+
+- All testing performed in isolated lab environment  
+- Evidence screenshots from actual playbook runs  
+- Configuration files and playbooks available for review  
+- Demonstrates readiness for regulated enterprise environments
